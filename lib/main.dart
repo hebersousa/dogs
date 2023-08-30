@@ -1,30 +1,36 @@
+import 'package:dogs/api/my_http_client.dart';
+import 'package:dogs/home/breed_ds.dart';
+import 'package:dogs/home/screens/breed_list_page.dart';
+import 'package:dogs/home/stores/breed_store.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Dogs',
+      debugShowCheckedModeBanner: false,
+
       theme: ThemeData(
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Dogs'),
+      //home: const MyHomePage(title: 'Dogs'),
+      home: BreedListPage()
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
 
   final String title;
 
@@ -33,8 +39,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +52,16 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Container(child: Text("Dogs")),
       ),
- // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: FloatingActionButton(onPressed: (){
+
+        BreedDataSource ds = BreedDataSource();
+        try {
+                BreedStore().fetchAllBreeds();
+
+        } catch(e) {
+          print(e);
+        }
+      }),
     );
   }
 }
