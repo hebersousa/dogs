@@ -7,16 +7,43 @@ import 'package:hive/hive.dart';
 main() {
   var path = Directory.current.path;
   Hive.init(path);
+
   var service = HiveService();
 
-  test('test hive serfice', ()  async{
+  group("Hive service tests", () {
+    test('should try add duplicate breeds but return only one', ()  async {
+      await Hive.deleteBoxFromDisk('breeds');
+      await expectLater(service.add(Breed(name: 'beagle')), completes);
+      await expectLater(service.add(Breed(name: 'beagle')), completes);
 
-    var save = service.saveFavorites([Breed(name: 'beagle')]);
-    expect(save, completes);
+      var recover = service.getFavorites();
+      expectLater(recover, completion(equals([Breed(name: 'beagle')])));
 
-    var recover = service.getFavorites();
-    expect(recover, completion(equals([Breed(name: 'beagle')])));
+    });
+
+    test('should add a new breed and recover a list of breeds', ()  async {
+      await Hive.deleteBoxFromDisk('breeds');
+      await service.add(Breed(name: 'beagle'));
+      await service.add(Breed(name: 'akita'));
+
+      var recover = service.getFavorites();
+      expectLater(recover, completion(equals([Breed(name: 'beagle'),Breed(name: 'akita')])));
+
+    });
+
+
+    test("should remove a breed called beagle", () async {
+      await Hive.deleteBoxFromDisk('breeds');
+      await service.add(Breed(name: 'beagle'));
+      await service.add(Breed(name: 'akita'));
+      await service.remove(Breed(name: 'beagle'));
+
+      var recover = service.getFavorites();
+      expectLater(recover, completion(equals([Breed(name: 'akita')])));
+    });
 
 
   });
+
+
 }

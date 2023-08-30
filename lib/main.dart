@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:dogs/api/my_http_client.dart';
 import 'package:dogs/home/repositories/breed_repository_remote.dart';
-import 'package:dogs/home/screens/breed_list_page.dart';
-import 'package:dogs/home/stores/breed_store.dart';
+import 'package:dogs/home/screens/breed_list_page/breed_list_page.dart';
+import 'package:dogs/home/stores/breed_list_store.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         BreedRepositoryRemote ds = BreedRepositoryRemote();
         try {
-                BreedStore(BreedRepositoryRemote()).fetchAllBreeds();
+                BreedListStore(BreedRepositoryRemote()).fetchAllBreeds();
 
         } catch(e) {
           print(e);

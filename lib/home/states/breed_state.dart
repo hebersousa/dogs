@@ -6,8 +6,8 @@ abstract class BreedState {}
 class InitialBreedState extends BreedState {}
 
 class SuccessBreedState extends BreedState {
-  final List<Breed> breeds;
-  SuccessBreedState(this.breeds);
+  final Breed breed;
+  SuccessBreedState(this.breed);
 }
 
 class LoadingBreedState extends BreedState {}

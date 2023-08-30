@@ -1,8 +1,9 @@
 import 'package:dogs/home/repositories/breed_repository_remote.dart';
+import 'package:dogs/home/screens/breed_detail_page/breed_detail_page.dart';
 import 'package:dogs/models/breed.dart';
-import 'package:dogs/home/screens/breed_list_item.dart';
-import 'package:dogs/home/states/breed_state.dart';
-import 'package:dogs/home/stores/breed_store.dart';
+import 'package:dogs/home/screens/breed_list_page/breed_list_item.dart';
+import 'package:dogs/home/states/breed_list_state.dart';
+import 'package:dogs/home/stores/breed_list_store.dart';
 import 'package:flutter/material.dart';
 
 class BreedListPage extends StatefulWidget {
@@ -14,13 +15,13 @@ class BreedListPage extends StatefulWidget {
 
 class _BreedListPageState extends State<BreedListPage> {
 
-  final BreedStore store = BreedStore(BreedRepositoryRemote());
+  final BreedListStore store = BreedListStore(BreedRepositoryRemote());
 
   @override
   Widget build(BuildContext context) {
     var icon = const Icon(Icons.favorite_border, color: Colors.red);
     var bar = AppBar(
-        title: Text("Dogs Breeds"),
+        title: const Text("Dog Breeds"),
     actions: [IconButton( onPressed: (){}, icon: icon)],);
     return Scaffold(appBar: bar,
       body: _body(),);
@@ -65,7 +66,7 @@ class _BreedListPageState extends State<BreedListPage> {
 
   Widget _body() {
 
-    return ValueListenableBuilder<BreedState>(
+    return ValueListenableBuilder<BreedListState>(
         valueListenable: store,
         builder:(context, state, child) {
           return buildListView(state);
@@ -73,25 +74,27 @@ class _BreedListPageState extends State<BreedListPage> {
   }
 
 
-  Widget buildListView(BreedState state) {
-    if(state is LoadingBreedState) {
+  Widget buildListView(BreedListState state) {
+    if(state is LoadingBreedListState) {
       return _loadingWidget();
     }
 
-    if(state is FailureBreedState) {
+    if(state is FailureBreedListState) {
       return Center(
           child: errorDialog(size: 20,message: state.message)
       );
     }
-    if(state is SuccessBreedState){
+    if(state is SuccessBreedListState){
       return ListView.builder(
           itemCount: state.breeds.length,
           itemBuilder: (_, index) {
             final Breed breed = state.breeds[index];
             return Padding(
                 padding: const EdgeInsets.all(15.0),
-                child: BreedListItem(
-                  name: breed.name.toString())
+                child: GestureDetector(
+                    child: BreedListItem(breed: breed),
+                    onTap: ()=> _goDetailPage(breed),
+                )
             );
           }
       );
@@ -107,4 +110,11 @@ class _BreedListPageState extends State<BreedListPage> {
         child: CircularProgressIndicator(),
       ));
 
+  _goDetailPage(Breed breed){
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (_) => BreedDetailPage(breed: breed)
+    );
+  }
 }
