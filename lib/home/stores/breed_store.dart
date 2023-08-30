@@ -1,21 +1,30 @@
 
-import 'package:dogs/home/breed_ds.dart';
+import 'package:dogs/home/repositories/breed_repository_remote.dart';
+import 'package:dogs/home/repositories/breed_repository.dart';
 import 'package:dogs/home/states/breed_state.dart';
+import 'package:dogs/models/breed.dart';
 import 'package:flutter/cupertino.dart';
 
 class BreedStore extends ValueNotifier<BreedState> {
-  BreedStore():super(InitialBreedState());
+  final BreedRepository repository;
+
+  BreedStore(this.repository):super(InitialBreedState());
+
+
+
 
   Future fetchAllBreeds() async {
-    var ds = BreedDataSource();
     value = LoadingBreedState();
     try {
-      var breeds = await ds.getAllBreeds();
+      var breeds = await repository.getAllBreeds();
       if (breeds != null) {
         value = SuccessBreedState(breeds);
       }
     } catch (e) {
-      value = ErrorBreedState(e.toString());
+      value = FailureBreedState(e.toString());
     }
   }
+
+  Future<void> checkBreed(Breed breed) async {}
+
 }

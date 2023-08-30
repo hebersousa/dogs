@@ -1,4 +1,4 @@
-import 'package:dogs/home/breed_ds.dart';
+import 'package:dogs/home/repositories/breed_repository_remote.dart';
 import 'package:flutter/material.dart';
 
 class BreedListItem extends StatelessWidget {
@@ -16,7 +16,7 @@ class BreedListItem extends StatelessWidget {
 
   _futureImage(){
     return FutureBuilder<String>(
-        future: BreedDataSource().getImage(name),
+        future: BreedRepositoryRemote().getImage(name),
         builder: (context,shot){
           if(shot.hasData){
             return Image.network(width: 150,fit: BoxFit.cover,

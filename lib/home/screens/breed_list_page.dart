@@ -1,4 +1,4 @@
-import 'package:dogs/home/breed_ds.dart';
+import 'package:dogs/home/repositories/breed_repository_remote.dart';
 import 'package:dogs/models/breed.dart';
 import 'package:dogs/home/screens/breed_list_item.dart';
 import 'package:dogs/home/states/breed_state.dart';
@@ -14,7 +14,7 @@ class BreedListPage extends StatefulWidget {
 
 class _BreedListPageState extends State<BreedListPage> {
 
-  final BreedStore store = BreedStore();
+  final BreedStore store = BreedStore(BreedRepositoryRemote());
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _BreedListPageState extends State<BreedListPage> {
       return _loadingWidget();
     }
 
-    if(state is ErrorBreedState) {
+    if(state is FailureBreedState) {
       return Center(
           child: errorDialog(size: 20,message: state.message)
       );

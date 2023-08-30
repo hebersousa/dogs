@@ -1,8 +1,9 @@
 
+import 'package:dogs/home/repositories/breed_repository.dart';
 import 'package:dogs/models/breed.dart';
 import 'package:dogs/api/my_http_client.dart';
 
-class BreedDataSource {
+class BreedRepositoryRemote extends BreedRepository{
 
 
   Future<List<Breed>?> getAllBreeds() async {

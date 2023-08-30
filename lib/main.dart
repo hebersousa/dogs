@@ -1,5 +1,5 @@
 import 'package:dogs/api/my_http_client.dart';
-import 'package:dogs/home/breed_ds.dart';
+import 'package:dogs/home/repositories/breed_repository_remote.dart';
 import 'package:dogs/home/screens/breed_list_page.dart';
 import 'package:dogs/home/stores/breed_store.dart';
 import 'package:flutter/material.dart';
@@ -54,9 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(onPressed: (){
 
-        BreedDataSource ds = BreedDataSource();
+        BreedRepositoryRemote ds = BreedRepositoryRemote();
         try {
-                BreedStore().fetchAllBreeds();
+                BreedStore(BreedRepositoryRemote()).fetchAllBreeds();
 
         } catch(e) {
           print(e);

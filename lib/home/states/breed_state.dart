@@ -12,7 +12,7 @@ class SuccessBreedState extends BreedState {
 
 class LoadingBreedState extends BreedState {}
 
-class ErrorBreedState extends BreedState {
+class FailureBreedState extends BreedState {
   final String message;
-  ErrorBreedState(this.message);
+  FailureBreedState(this.message);
 }

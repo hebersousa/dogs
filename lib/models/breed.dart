@@ -1,9 +1,12 @@
 
-class Breed {
+import 'package:equatable/equatable.dart';
+
+class Breed extends Equatable {
   String? name;
   List<String>? images;
+  bool check  = false;
 
-  Breed({this.name, this.images});
+  Breed({this.name, this.images, this.check = false });
 
   Breed.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -22,6 +25,12 @@ class Breed {
   String toString() {
     return toJson().toString();
   }
+
+  @override
+  List<Object?> get props => [name,check];
+
+
+
 
 
 }
