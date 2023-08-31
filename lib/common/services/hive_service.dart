@@ -1,15 +1,29 @@
 
 import 'dart:convert';
 
-import 'package:dogs/models/breed.dart';
+import 'package:dogs/common/models/breed.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HiveService {
 
+  Box<dynamic>? box;
+  ValueListenable<Box<dynamic>>? listenable()=> box?.listenable();
+
+
+  Future loadBox() async {
+    box ??= (await Hive.openBox('breeds'));
+
+    return Future.value(box);
+  }
+
+
   Future<List<Breed>> getFavorites() async {
-    var box = await Hive.openBox('breeds');
-    var fav =  box.get('favorites');
+
+    box ??= (await Hive.openBox('breeds'));
+
+    var fav =  box?.get('favorites');
     if( fav == null) {
       return Future.value(<Breed>[]);
     }
@@ -19,8 +33,8 @@ class HiveService {
   }
 
   Future<void> _save(List<Breed> breeds) async {
-    var box = await Hive.openBox('breeds');
-    box.put('favorites', json.encode(breeds));
+    box ??= await Hive.openBox('breeds');
+    box?.put('favorites', json.encode(breeds));
   }
 
   Future<void> add(Breed breed) async{

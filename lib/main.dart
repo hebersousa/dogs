@@ -1,14 +1,17 @@
 import 'dart:io';
 
-import 'package:dogs/api/my_http_client.dart';
+import 'package:dogs/common/api/my_http_client.dart';
+import 'package:dogs/common/models/breed.dart';
+import 'package:dogs/common/services/hive_service.dart';
 import 'package:dogs/home/repositories/breed_repository_remote.dart';
 import 'package:dogs/home/screens/breed_list_page/breed_list_page.dart';
 import 'package:dogs/home/stores/breed_list_store.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() async {
-
+void main()  {
+  Hive.initFlutter();
   runApp(const MyApp());
 
 }

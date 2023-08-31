@@ -1,5 +1,5 @@
 
-import 'package:dogs/models/breed.dart';
+import 'package:dogs/common/models/breed.dart';
 
 abstract class  BreedRepository {
   Future<List<Breed>?> getAllBreeds();

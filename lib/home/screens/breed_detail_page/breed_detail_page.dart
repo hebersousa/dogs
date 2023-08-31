@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dogs/common/widgets/rounded_cached_image.dart';
 import 'package:dogs/home/repositories/breed_repository_remote.dart';
+import 'package:dogs/home/screens/breed_detail_page/favorite_button_widget.dart';
 import 'package:dogs/home/states/breed_state.dart';
 import 'package:dogs/home/stores/breed_store.dart';
-import 'package:dogs/models/breed.dart';
+import 'package:dogs/common/models/breed.dart';
 import 'package:flutter/material.dart';
 
 class BreedDetailPage extends StatefulWidget {
@@ -43,13 +45,13 @@ class _BreedDetailPageState extends State<BreedDetailPage> {
     return ValueListenableBuilder<BreedState>(
         valueListenable: store,
         builder:(context, state, child) {
-          return _buildListView(state);
+          return _buildList(state);
         });
 
   }
 
 
-  Widget _buildListView(BreedState state) {
+  Widget _buildList(BreedState state) {
     if(state is LoadingBreedState) {
       return _loadingWidget();
     }
@@ -59,33 +61,41 @@ class _BreedDetailPageState extends State<BreedDetailPage> {
           child:  Text("Failure")
       );
     }
-    if(state is SuccessBreedState){
+    if(state is SuccessBreedState) {
       var images = state.breed.images;
-      return ListView.builder(
-          itemCount: images!.length,
-          itemBuilder: (_, index) {
-            final String image = images[index];
-            return Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: GestureDetector(
-                  child: _image(image),
 
-                )
-            );
-          }
-      );
+      if(images!.isEmpty) {
+        return const Center(child:Text('No Images'));
+      }
+
+      return Column(children: [
+          FavoriteButtonWidget(breed: state.breed),
+        Flexible(child: _listView(state!))
+      ],);
     }
 
     return Container();
 
   }
 
-  _image(String url) {
-    return  CachedNetworkImage(
-      imageUrl: url,
-      placeholder: (context, url) => Icon(Icons.pets),
-      errorWidget: (context, url, error) => Icon(Icons.pets),
+  _listView(SuccessBreedState state) {
+    var images = state.breed.images;
+
+    return ListView.builder(
+        itemCount: images!.length,
+        itemBuilder: (_, index) {
+
+          final String image = images[index];
+          return Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: GestureDetector(
+                child: RoundedCachedImage(url: image),
+
+              )
+          );
+        }
     );
+
   }
 
   _loadingWidget ()=> const Center(

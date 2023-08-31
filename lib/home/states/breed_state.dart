@@ -1,4 +1,4 @@
-import 'package:dogs/models/breed.dart';
+import 'package:dogs/common/models/breed.dart';
 
 
 abstract class BreedState {}

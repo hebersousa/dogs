@@ -1,7 +1,7 @@
 
 import 'package:dogs/home/repositories/breed_repository.dart';
 import 'package:dogs/home/states/breed_state.dart';
-import 'package:dogs/models/breed.dart';
+import 'package:dogs/common/models/breed.dart';
 import 'package:flutter/material.dart';
 
 class BreedStore extends ValueNotifier<BreedState> {

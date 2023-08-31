@@ -1,12 +1,13 @@
 import 'dart:io';
-import 'package:dogs/models/breed.dart';
-import 'package:dogs/services/hive_service.dart';
+import 'package:dogs/common/models/breed.dart';
+import 'package:dogs/common/services/hive_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 main() {
-  var path = Directory.current.path;
-  Hive.init(path);
+
+  Hive.initFlutter();
 
   var service = HiveService();
 

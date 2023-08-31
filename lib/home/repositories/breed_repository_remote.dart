@@ -2,8 +2,8 @@
 import 'dart:async';
 
 import 'package:dogs/home/repositories/breed_repository.dart';
-import 'package:dogs/models/breed.dart';
-import 'package:dogs/api/my_http_client.dart';
+import 'package:dogs/common/models/breed.dart';
+import 'package:dogs/common/api/my_http_client.dart';
 
 class BreedRepositoryRemote extends BreedRepository {
 

@@ -10,14 +10,16 @@ class Breed extends Equatable {
 
   Breed.fromJson(Map<String, dynamic> json) {
     name = json['name'];
-    if(json.containsKey("images"))
+    if(json.containsKey("images")) {
       images = json['images'].cast<String>();
+    }
+
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    if(images != null) data['images'] = this.images;
+    data['name'] = name;
+    if(images != null) data['images'] = images!.take(5).toList();
     return data;
   }
 
