@@ -1,7 +1,12 @@
-# dogs
+# Dogs Breeds
 
-Dogs
+This project uses the https://dog.ceo/ API to provide a Flutter Mobile App that lists dog breeds and their images. 
+Here are some packages utilized and implementation features:
 
+- State Pattern to control states and ValueNotifier for reactivity.
+- `hive` and `cached_network_image` packages for storing favorites locally.
+- The `mocktail` package for mocking repositories in unit tests.
+  
 ## Getting Started
 
 This project is a starting point for a Flutter application.
