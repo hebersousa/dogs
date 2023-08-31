@@ -6,16 +6,8 @@ Here are some packages utilized and implementation features:
 - State Pattern to control states and ValueNotifier for reactivity.
 - `hive` and `cached_network_image` packages for storing favorites locally.
 - The `mocktail` package for mocking repositories in unit tests.
-  
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Screenshots
+![Screenshot_20230831-171436](https://github.com/hebersousa/dogs/assets/8524608/9f27b45d-daf4-4557-a792-3b4379104487)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
