@@ -1,7 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dogs/common/widgets/rounded_cached_image.dart';
-import 'package:dogs/home/repositories/breed_repository_remote.dart';
 import 'package:dogs/common/models/breed.dart';
+import 'package:dogs/home/screens/breed_detail_page/favorite_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class BreedListItem extends StatelessWidget {
@@ -10,18 +9,19 @@ class BreedListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   _container();
-  }
-
-   _container() {
-    return Column(
+    return  Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        _futureImage(),
+        _image(),
         _subtitle(breed.name!)
       ],
     );
   }
+
+
+  _image() => breed.coverImage!=null ? SizedBox(width: double.infinity,
+      child: RoundedCachedImage(url: breed.coverImage! )) : const LoadingImage();
+
 
 
   _subtitle(String name) {
@@ -30,18 +30,6 @@ class BreedListItem extends StatelessWidget {
     return Text(capitalized, style:style );
   }
 
-
-
-  _futureImage(){
-    return FutureBuilder<String>(
-        future: BreedRepositoryRemote().getImage(breed),
-        builder: (context,shot){
-          if(shot.hasData){
-            return RoundedCachedImage(url: shot.data.toString());
-          }
-          return const LoadingImage();
-        });
-  }
 
 }
 

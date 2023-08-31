@@ -1,79 +1,58 @@
 import 'package:dogs/common/models/breed.dart';
-import 'package:dogs/common/services/hive_service.dart';
+import 'package:dogs/common/services/local_data_service.dart';
+import 'package:dogs/favorites/states/favorite_state.dart';
+import 'package:dogs/favorites/stores/favorite_store.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'dart:convert';
 
 class FavoriteButtonWidget extends StatefulWidget {
   final Breed breed;
-  const FavoriteButtonWidget({required this.breed, Key? key}) : super(key: key);
+  bool onlyIcon = false;
+   FavoriteButtonWidget({required this.breed, this.onlyIcon = false, Key? key}) : super(key: key);
 
   @override
   State<FavoriteButtonWidget> createState() => _FavoriteButtonWidgetState();
 }
 
 class _FavoriteButtonWidgetState extends State<FavoriteButtonWidget> {
-  HiveService hiveService = HiveService();
+  final FavoriteStore store = FavoriteStore(LocalDataService());
 
   @override
   void initState() {
-
     super.initState();
+    store.fetchAll();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _future();
+    return _body();
   }
 
-  _button( {required String text, required Function? onPressed}) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-      child: ElevatedButton(
-          onPressed: onPressed==null ? null : ()=> onPressed(),
-          child:  Text(text),
-    ));
 
-  }
+  Widget _body() {
 
-  _future(){
-    return FutureBuilder(
-        future: hiveService.loadBox(),
-        builder: (context,shot){
-          var state = shot.connectionState;
-          if(shot.hasData && state == ConnectionState.done) {
-                return _observer();
+    return ValueListenableBuilder<FavoriteState>(
+        valueListenable: store,
+        builder:(context, state, child) {
+          if(state is SuccessFavoriteState){
+              if( store.has(widget.breed)){
+                  return _button(iconData: Icons.favorite);
+              } else {
+                  return _button(iconData: Icons.favorite_border);
+              }
           }
-          return _button(
-              text: 'Add to Favorite',
-              onPressed: null
-          );
-    });
-  }
-
-    _addBreed ()=> hiveService.add(widget.breed);
-    _removeBreed()=> hiveService.remove(widget.breed);
-
-  _observer() {
-    return ValueListenableBuilder(
-        valueListenable: hiveService.listenable()!,
-
-        builder: (context, box, _) {
-               var fav = box.get('favorites');
-
-               var list = fav!= null?  (json.decode(fav) as List)
-                   .map((data) => Breed.fromJson(data)).toList()
-                   : [];
-
-               if( list.any((e) => e.name == widget.breed.name)){
-                 return _button(text: 'Remove from Favorites',onPressed: ()=>_removeBreed());
-               }
-
-          return _button(text: 'Add to Favorites',onPressed: ()=> _addBreed());
-
+          return  _button(iconData: Icons.favorite_border, disable: true);
         });
   }
 
+  _button( {required IconData iconData, bool disable = false, }) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(30, 10, 30, 0),
+      child: IconButton(onPressed:  disable ? null : ()=> store.check(widget.breed),
 
+        icon:
+                Icon(iconData,color: Colors.red.shade800,)
+            )
+    );
+  }
 
 }

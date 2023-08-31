@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:dogs/common/widgets/rounded_cached_image.dart';
 import 'package:dogs/home/repositories/breed_repository_remote.dart';
 import 'package:dogs/home/screens/breed_detail_page/favorite_button_widget.dart';
@@ -30,7 +30,7 @@ class _BreedDetailPageState extends State<BreedDetailPage> {
   @override
   Widget build(BuildContext context) {
     var name = widget.breed.name!.toUpperCase();
-    var bar = AppBar(centerTitle: true, title: Text(name),
+    var bar = AppBar( title: Text(name),centerTitle: true,
     );
     return SafeArea(minimum: const EdgeInsets.only(top: 50),
       child: Scaffold(
@@ -57,8 +57,8 @@ class _BreedDetailPageState extends State<BreedDetailPage> {
     }
 
     if(state is FailureBreedState) {
-      return const Center(
-          child:  Text("Failure")
+      return  Center(
+          child:  Text(state.message )
       );
     }
     if(state is SuccessBreedState) {
@@ -69,7 +69,7 @@ class _BreedDetailPageState extends State<BreedDetailPage> {
       }
 
       return Column(children: [
-          FavoriteButtonWidget(breed: state.breed),
+        FavoriteButtonWidget(breed: state.breed, ),
         Flexible(child: _listView(state!))
       ],);
     }

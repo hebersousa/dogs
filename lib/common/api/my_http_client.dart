@@ -39,7 +39,7 @@ class MyHttpClient {
       case DioExceptionType.connectionError:
         return 'connection error';
       case DioExceptionType.unknown:
-        return 'unknown';
+        return 'Unknown Error';
     }
 
   }

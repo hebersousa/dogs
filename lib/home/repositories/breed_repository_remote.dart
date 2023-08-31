@@ -28,7 +28,7 @@ class BreedRepositoryRemote extends BreedRepository {
   }
 
 
-  Future<String> getImage(Breed breed) async {
+  Future<String?> getImage(Breed breed) async {
     var api = MyHttpClient();
 
     var url = "https://dog.ceo/api/breed/${breed.name}/images/random";

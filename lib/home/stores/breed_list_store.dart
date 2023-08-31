@@ -1,8 +1,6 @@
 
-import 'package:dogs/home/repositories/breed_repository_remote.dart';
 import 'package:dogs/home/repositories/breed_repository.dart';
 import 'package:dogs/home/states/breed_list_state.dart';
-import 'package:dogs/common/models/breed.dart';
 import 'package:flutter/cupertino.dart';
 
 class BreedListStore extends ValueNotifier<BreedListState> {
@@ -22,6 +20,15 @@ class BreedListStore extends ValueNotifier<BreedListState> {
     }
   }
 
-  Future<void> checkBreed(Breed breed) async {}
+  Future<void> loadCoverImage(int index) async{
+      if(value is SuccessBreedListState){
+             var breeds = (value as SuccessBreedListState).breeds;
+             var urlImage = await repository.getImage(breeds[index]);
+             if(urlImage != null){
+                 breeds[index].coverImage = urlImage;
+                 value = SuccessBreedListState(breeds);
+             }
+      }
+  }
 
 }

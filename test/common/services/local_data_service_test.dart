@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'package:dogs/common/models/breed.dart';
-import 'package:dogs/common/services/hive_service.dart';
+import 'package:dogs/common/services/local_data_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 main() {
 
-  Hive.initFlutter();
+  Hive.init( Directory.current.path);
 
-  var service = HiveService();
+  var service = LocalDataService();
 
   group("Hive service tests", () {
     test('should try add duplicate breeds but return only one', ()  async {
@@ -17,8 +17,8 @@ main() {
       await expectLater(service.add(Breed(name: 'beagle')), completes);
       await expectLater(service.add(Breed(name: 'beagle')), completes);
 
-      var recover = service.getFavorites();
-      expectLater(recover, completion(equals([Breed(name: 'beagle')])));
+      var recover =    service.getFavorites();
+       expect(recover, completion(equals([Breed(name: 'beagle')])));
 
     });
 
@@ -27,8 +27,8 @@ main() {
       await service.add(Breed(name: 'beagle'));
       await service.add(Breed(name: 'akita'));
 
-      var recover = service.getFavorites();
-      expectLater(recover, completion(equals([Breed(name: 'beagle'),Breed(name: 'akita')])));
+      var recover = await service.getFavorites();
+      expectLater(recover, equals([Breed(name: 'beagle'),Breed(name: 'akita')]));
 
     });
 

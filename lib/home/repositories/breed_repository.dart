@@ -6,5 +6,5 @@ abstract class  BreedRepository {
 
   Future<List<String>?> getImages(Breed breed);
 
-  Future<String> getImage(Breed breed);
+  Future<String?> getImage(Breed breed);
 }

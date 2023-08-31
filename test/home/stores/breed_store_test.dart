@@ -1,13 +1,8 @@
-import 'dart:io';
-
-import 'package:dogs/home/repositories/breed_repository_remote.dart';
 import 'package:dogs/home/repositories/breed_repository.dart';
 import 'package:dogs/home/states/breed_list_state.dart';
 import 'package:dogs/home/stores/breed_list_store.dart';
 import 'package:dogs/common/models/breed.dart';
-import 'package:dogs/common/services/hive_service.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:hive/hive.dart';
 import 'package:mocktail/mocktail.dart';
 
 class BreedRepositoryMock extends Mock implements BreedRepository {}

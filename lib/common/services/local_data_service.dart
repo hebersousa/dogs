@@ -6,26 +6,14 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class HiveService {
-
-  Box<dynamic>? box;
-  ValueListenable<Box<dynamic>>? listenable()=> box?.listenable();
-
-
-  Future loadBox() async {
-    box ??= (await Hive.openBox('breeds'));
-
-    return Future.value(box);
-  }
+class LocalDataService {
 
 
   Future<List<Breed>> getFavorites() async {
-
-    box ??= (await Hive.openBox('breeds'));
-
-    var fav =  box?.get('favorites');
+    var box = await Hive.openBox('breeds');
+    var fav =  box.get('favorites');
     if( fav == null) {
-      return Future.value(<Breed>[]);
+        return Future.value(<Breed>[]);
     }
     var data = (json.decode(fav) as List)
         .map((data) => Breed.fromJson(data)).toList();
@@ -33,16 +21,17 @@ class HiveService {
   }
 
   Future<void> _save(List<Breed> breeds) async {
-    box ??= await Hive.openBox('breeds');
-    box?.put('favorites', json.encode(breeds));
+      var box = await Hive.openBox('breeds');
+      box.put('favorites', json.encode(breeds));
   }
 
-  Future<void> add(Breed breed) async{
+  Future<List<Breed>> add(Breed breed) async{
     var favorites = await getFavorites();
     if( !favorites.any((e) => e.name == breed.name)){
       favorites.add(breed);
       await _save(favorites);
     }
+    return Future.value(favorites);
   }
 
   Future<List<Breed>> remove(Breed breed) async{

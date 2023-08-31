@@ -7,6 +7,7 @@ class LoadingImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
               height: 300,
+              width: 100,
               child: const Icon(Icons.pets)
   );
 }
@@ -18,13 +19,16 @@ class RoundedCachedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: CachedNetworkImage(
-        fit: BoxFit.cover,
-        imageUrl: url,
-        placeholder: (context, url) => const LoadingImage(),
-        errorWidget: (context, url, error) => const LoadingImage(),
+    return  Padding(
+      padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15.0),
+        child: CachedNetworkImage(
+          fit: BoxFit.cover,
+          imageUrl: url,
+          placeholder: (context, url) => const LoadingImage(),
+          errorWidget: (context, url, error) => const LoadingImage(),
+        ),
       ),
     );
   }

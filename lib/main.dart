@@ -1,13 +1,5 @@
-import 'dart:io';
-
-import 'package:dogs/common/api/my_http_client.dart';
-import 'package:dogs/common/models/breed.dart';
-import 'package:dogs/common/services/hive_service.dart';
-import 'package:dogs/home/repositories/breed_repository_remote.dart';
-import 'package:dogs/home/screens/breed_list_page/breed_list_page.dart';
-import 'package:dogs/home/stores/breed_list_store.dart';
+import 'package:dogs/tabs_page.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main()  {
@@ -31,44 +23,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       //home: const MyHomePage(title: 'Dogs'),
-      home: BreedListPage()
+      home: TabsPage()
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Container(child: Text("Dogs")),
-      ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-
-        BreedRepositoryRemote ds = BreedRepositoryRemote();
-        try {
-                BreedListStore(BreedRepositoryRemote()).fetchAllBreeds();
-
-        } catch(e) {
-          print(e);
-        }
-      }),
-    );
-  }
-}

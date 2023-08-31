@@ -1,3 +1,4 @@
+import 'package:dogs/common/widgets/rounded_cached_image.dart';
 import 'package:dogs/favorites/screens/favorites_page.dart';
 import 'package:dogs/home/repositories/breed_repository_remote.dart';
 import 'package:dogs/home/screens/breed_detail_page/breed_detail_page.dart';
@@ -20,11 +21,11 @@ class _BreedListPageState extends State<BreedListPage> {
 
   @override
   Widget build(BuildContext context) {
-    var icon = const Icon(Icons.favorite_border, color: Colors.red);
-    var bar = AppBar(
 
-        title: const Text("Dog Breeds"),
-    actions: [IconButton( onPressed: ()=>_goToFavoritePage(), icon: icon)],);
+    var bar = AppBar(
+        centerTitle: true,
+        title: const Text("Dog Breeds",style: TextStyle(color: Colors.indigo),),
+    );
     return Scaffold(appBar: bar,
       body: _body(),);
   }
@@ -38,6 +39,11 @@ class _BreedListPageState extends State<BreedListPage> {
 
 
   Widget errorDialog({required double size, required String message}){
+    var textStyle = TextStyle(
+        fontSize: size,
+        fontWeight: FontWeight.w500,
+        color: Colors.black
+    );
     return SizedBox(
       height: 180,
       width: 200,
@@ -45,11 +51,7 @@ class _BreedListPageState extends State<BreedListPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(message,
-            style: TextStyle(
-                fontSize: size,
-                fontWeight: FontWeight.w500,
-                color: Colors.black
-            ),
+            style: textStyle,
           ),
           const SizedBox(height: 10,),
           ElevatedButton(
@@ -90,11 +92,16 @@ class _BreedListPageState extends State<BreedListPage> {
       return ListView.builder(
           itemCount: state.breeds.length,
           itemBuilder: (_, index) {
+
             final Breed breed = state.breeds[index];
+
+            if(breed.coverImage==null){
+              store.loadCoverImage(index);
+            }
             return Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: GestureDetector(
-                    child: BreedListItem(breed: breed),
+                    child: BreedListItem(key: Key(breed.name!), breed: breed),
                     onTap: ()=> _goToDetailPage(breed),
                 )
             );
@@ -120,11 +127,4 @@ class _BreedListPageState extends State<BreedListPage> {
     );
   }
 
-  _goToFavoritePage(){
-    showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        builder: (_) => FavoritesPage()
-    );
-  }
 }
