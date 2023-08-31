@@ -1,4 +1,4 @@
-# Dogs Breeds
+# Dog Breeds
 
 This project uses the https://dog.ceo/ API to provide a Flutter Mobile App that lists dog breeds and their images. 
 Here are some packages utilized and implementation features:
