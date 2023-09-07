@@ -1,3 +1,4 @@
+import 'package:dogs/common/services/service_locator.dart';
 import 'package:dogs/common/widgets/rounded_cached_image.dart';
 import 'package:dogs/favorites/screens/favorites_page.dart';
 import 'package:dogs/home/repositories/breed_repository_remote.dart';
@@ -8,6 +9,7 @@ import 'package:dogs/home/states/breed_list_state.dart';
 import 'package:dogs/home/stores/breed_list_store.dart';
 import 'package:flutter/material.dart';
 
+
 class BreedListPage extends StatefulWidget {
   const BreedListPage({Key? key}) : super(key: key);
 
@@ -17,7 +19,7 @@ class BreedListPage extends StatefulWidget {
 
 class _BreedListPageState extends State<BreedListPage> {
 
-  final BreedListStore store = BreedListStore(BreedRepositoryRemote());
+  final  store = locator<BreedListStore>();
 
   @override
   Widget build(BuildContext context) {

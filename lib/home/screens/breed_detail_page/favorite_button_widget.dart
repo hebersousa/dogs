@@ -1,5 +1,6 @@
 import 'package:dogs/common/models/breed.dart';
 import 'package:dogs/common/services/local_data_service.dart';
+import 'package:dogs/common/services/service_locator.dart';
 import 'package:dogs/favorites/states/favorite_state.dart';
 import 'package:dogs/favorites/stores/favorite_store.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class FavoriteButtonWidget extends StatefulWidget {
 }
 
 class _FavoriteButtonWidgetState extends State<FavoriteButtonWidget> {
-  final FavoriteStore store = FavoriteStore(LocalDataService());
+  final FavoriteStore store = locator<FavoriteStore>();
 
   @override
   void initState() {

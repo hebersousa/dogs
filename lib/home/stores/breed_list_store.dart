@@ -20,6 +20,8 @@ class BreedListStore extends ValueNotifier<BreedListState> {
     }
   }
 
+
+
   Future<void> loadCoverImage(int index) async{
       if(value is SuccessBreedListState){
              var breeds = (value as SuccessBreedListState).breeds;

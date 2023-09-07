@@ -9,11 +9,12 @@ class BreedListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return  Column(key: Key(breed.name!),
       mainAxisSize: MainAxisSize.max,
       children: [
         _image(),
-        _subtitle(breed.name!)
+        _subtitle(breed.name!),
+        FavoriteButtonWidget(breed: breed)
       ],
     );
   }
