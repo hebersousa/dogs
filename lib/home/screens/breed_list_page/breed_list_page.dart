@@ -5,6 +5,7 @@ import 'package:dogs/home/repositories/breed_repository_remote.dart';
 import 'package:dogs/home/screens/breed_detail_page/breed_detail_page.dart';
 import 'package:dogs/common/models/breed.dart';
 import 'package:dogs/home/screens/breed_list_page/breed_list_item.dart';
+import 'package:dogs/home/screens/breed_list_page/search_bar_widget.dart';
 import 'package:dogs/home/states/breed_list_state.dart';
 import 'package:dogs/home/stores/breed_list_store.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,8 @@ class _BreedListPageState extends State<BreedListPage> {
 
     var bar = AppBar(
         centerTitle: true,
-        title: const Text("Dog Breeds",style: TextStyle(color: Colors.indigo),),
+        //title: const Text("Dog Breeds",style: TextStyle(color: Colors.indigo),),
+        title: SearchBarWidget()
     );
     return Scaffold(appBar: bar,
       body: _body(),);
@@ -36,7 +38,10 @@ class _BreedListPageState extends State<BreedListPage> {
   @override
   void initState() {
     super.initState();
-    store.fetchAllBreeds();
+
+      store.fetchAllBreeds();
+
+
   }
 
 
@@ -75,12 +80,14 @@ class _BreedListPageState extends State<BreedListPage> {
     return ValueListenableBuilder<BreedListState>(
         valueListenable: store,
         builder:(context, state, child) {
+         // return buildListView(state);
           return buildListView(state);
         });
   }
 
 
   Widget buildListView(BreedListState state) {
+
     if(state is LoadingBreedListState) {
       return _loadingWidget();
     }
@@ -91,6 +98,10 @@ class _BreedListPageState extends State<BreedListPage> {
       );
     }
     if(state is SuccessBreedListState){
+      if(state.breeds.isEmpty) {
+        return const Center(child:  Text('No breed to show'));
+      }
+
       return ListView.builder(
           itemCount: state.breeds.length,
           itemBuilder: (_, index) {

@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 
 class FavoriteButtonWidget extends StatefulWidget {
   final Breed breed;
-  bool onlyIcon = false;
-   FavoriteButtonWidget({required this.breed, this.onlyIcon = false, Key? key}) : super(key: key);
+  bool onlyIcon = true;
+   FavoriteButtonWidget({required this.breed, this.onlyIcon = true, Key? key}) : super(key: key);
 
   @override
   State<FavoriteButtonWidget> createState() => _FavoriteButtonWidgetState();
@@ -20,7 +20,10 @@ class _FavoriteButtonWidgetState extends State<FavoriteButtonWidget> {
   @override
   void initState() {
     super.initState();
-    store.fetchAll();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      store.fetchAll();
+    });
+
   }
 
   @override
@@ -46,14 +49,26 @@ class _FavoriteButtonWidgetState extends State<FavoriteButtonWidget> {
   }
 
   _button( {required IconData iconData, bool disable = false, }) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(30, 10, 30, 0),
-      child: IconButton(onPressed:  disable ? null : ()=> store.check(widget.breed),
-
-        icon:
-                Icon(iconData,color: Colors.red.shade800,)
-            )
+    Icon icon = Icon(iconData,color: Colors.red.shade800,);
+    var action = disable ? null : ()=> store.check(widget.breed);
+    return  widget.onlyIcon ?
+          IconButton(onPressed: action, icon: icon)
+          : InkWell(onTap:  action,
+          child:  Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _subtitle(widget.breed.name!),
+              const SizedBox(width: 5,),
+              icon],
+          ),
     );
+  }
+
+
+  _subtitle(String name) {
+    var capitalized =  name[0].toUpperCase() + name.substring(1);
+    var style =  const TextStyle(fontSize: 26, color: Colors.black38);
+    return Text(capitalized, style:style );
   }
 
 }

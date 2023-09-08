@@ -13,8 +13,7 @@ class BreedListItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         _image(),
-        _subtitle(breed.name!),
-        FavoriteButtonWidget(breed: breed)
+        FavoriteButtonWidget(breed: breed,onlyIcon: false,)
       ],
     );
   }

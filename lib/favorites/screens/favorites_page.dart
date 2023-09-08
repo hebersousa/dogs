@@ -21,7 +21,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
 
-    var bar = AppBar(centerTitle: true, title: const Text('Favorites'),
+    var bar = AppBar(centerTitle: true, title: const Text('My Favorites Breeds'),
     );
     return SafeArea(minimum: const EdgeInsets.only(top: 50),
       child: Scaffold(
@@ -35,7 +35,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   void initState() {
     super.initState();
-    store.fetchAll();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      store.fetchAll();
+    });
+
   }
 
 
