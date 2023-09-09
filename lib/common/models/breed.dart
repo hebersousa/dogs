@@ -1,9 +1,11 @@
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 
 class Breed extends Equatable {
   String? name;
   List<String>? images;
+  List<Uint8List> imageBytes =[];
   String? coverImage;
   bool check  = false;
 
@@ -15,13 +17,18 @@ class Breed extends Equatable {
       images = json['images'].cast<String>();
     }
 
+    if(json.containsKey("imageBytes")) {
+      imageBytes = (json['imageBytes'] as List)
+          .map((e) => Uint8List.fromList( e.cast<int>() )).toList();
+    }
+
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = name;
     if(coverImage!=null) data['coverImage'] = coverImage;
-    if(images != null) data['images'] = images!.take(5).toList();
+    if(imageBytes.isNotEmpty) data['imageBytes'] = imageBytes;
     return data;
   }
 

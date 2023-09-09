@@ -5,6 +5,7 @@ import 'package:dogs/home/screens/breed_detail_page/favorite_button_widget.dart'
 import 'package:dogs/home/states/breed_state.dart';
 import 'package:dogs/home/stores/breed_store.dart';
 import 'package:dogs/common/models/breed.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class BreedDetailPage extends StatefulWidget {
@@ -36,9 +37,13 @@ class _BreedDetailPageState extends State<BreedDetailPage> {
       child: Scaffold(
         appBar: bar,
         body: _body(),
+
       ),
     );
   }
+
+
+
 
   Widget _body() {
 

@@ -1,5 +1,9 @@
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'dart:typed_data';
+import 'dart:convert';
 
 class MyHttpClient {
 
@@ -20,6 +24,22 @@ class MyHttpClient {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<Uint8List> downloadImage(String imageUrl) async {
+    var dio = Dio();
+    final response = await dio.get(imageUrl, options: Options(responseType: ResponseType.bytes));
+    try {
+      if (response.statusCode == 200) {
+        Uint8List imageBytes = Uint8List.fromList(response.data);
+        return Future.value(imageBytes);
+      } else {
+        throw 'Failed to load image';
+      }
+    } catch(e) {
+      rethrow;
+    }
+
   }
 
   String dioToError(DioExceptionType dioError) {

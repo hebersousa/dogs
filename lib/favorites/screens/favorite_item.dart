@@ -1,4 +1,5 @@
 import 'package:dogs/common/widgets/rounded_cached_image.dart';
+import 'package:dogs/common/widgets/rounded_memory_image.dart';
 import 'package:dogs/home/repositories/breed_repository_remote.dart';
 import 'package:dogs/common/models/breed.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class FavoriteItem extends StatelessWidget {
   _content() {
     return Column(children: [
       _header(),
-      _listImages()
+      _listImageBytes()
+      //_listImages()
     ]);
 
   }
@@ -38,6 +40,15 @@ class FavoriteItem extends StatelessWidget {
   map((url) => RoundedCachedImage(url: url)).toList().cast<Widget>() ?? []),
     );
   }
+
+  _listImageBytes(){
+    return SizedBox(height: 150,
+      child: ListView(scrollDirection: Axis.horizontal,
+          children: breed.imageBytes.
+          map((image) => RoundedMemoryImage(image: image)).toList().cast<Widget>() ),
+    );
+  }
+
 
 
   _subtitle(String name) {

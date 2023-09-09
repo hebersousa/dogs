@@ -21,7 +21,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
 
-    var bar = AppBar(centerTitle: true, title: const Text('My Favorites Breeds'),
+    var bar = AppBar(centerTitle: true, title: const Text('My Favorite Breeds'),
     );
     return SafeArea(minimum: const EdgeInsets.only(top: 50),
       child: Scaffold(

@@ -2,6 +2,7 @@
 import 'package:dogs/home/repositories/breed_repository.dart';
 import 'package:dogs/home/states/breed_state.dart';
 import 'package:dogs/common/models/breed.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class BreedStore extends ValueNotifier<BreedState> {
@@ -20,6 +21,13 @@ class BreedStore extends ValueNotifier<BreedState> {
     } catch (e) {
       value = FailureBreedState(e.toString());
     }
+  }
+
+
+  @override
+  Future<Uint8List> downloadImage(String imageUrl) async {
+       var result =  await repository.downloadImage(imageUrl);
+       return Future.value(result);
   }
 
 
