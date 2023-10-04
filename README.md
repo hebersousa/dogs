@@ -8,6 +8,7 @@ Here are some packages utilized and implementation features:
 - The `mocktail` package for mocking repositories in unit tests.
 
 ## Screenshots
-![Screenshot_20230831-171436](https://github.com/hebersousa/dogs/assets/8524608/9f27b45d-daf4-4557-a792-3b4379104487)
+![Screenshot_20230831-171436](https://github.com/hebersousa/dogs/assets/8524608/dfb9734e-06a7-4926-9e35-6fee76f37416)
+
 
 
